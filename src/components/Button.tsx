@@ -13,7 +13,7 @@ const Button = ({ children, styles, type }: ButtonProps) => {
       className={
         styles
           ? styles
-          : "bg-black text-white text-sm px-6 py-2.5 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-black/90"
+          : "bg-earth text-white text-sm px-6 py-2.5 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-strong"
       }
     >
       {children}
