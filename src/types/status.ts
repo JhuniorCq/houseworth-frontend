@@ -1,4 +1,4 @@
 export type StatusType = {
   loading: boolean;
-  error: null | string;
+  error?: null | string;
 };

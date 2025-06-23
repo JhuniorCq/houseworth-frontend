@@ -12,7 +12,15 @@ const ProtectedRoute = ({
   children,
   redirectTo = "/",
 }: ProtectedRouteProps) => {
-  const { firebaseUser } = useAuth();
+  const {
+    firebaseUser,
+    status: { loading },
+  } = useAuth();
+
+  // Mientras se verifica la sesión -> Si no hay esión  el usuario será redirijido
+  if (loading) {
+    return <div>Cargando la sesisón ...</div>;
+  }
 
   // Al obtener a firebaseUser acá mismo, ya no es necesario que me pasen un valor para "isAllowed"
   if (!firebaseUser) {
