@@ -40,7 +40,7 @@ const Input = <T extends FieldValues>({
   };
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-2">
       {label && (
         <label
           htmlFor={`${id}-${String(name)}`}
@@ -81,7 +81,9 @@ const Input = <T extends FieldValues>({
           ))}
       </div>
       {error && (
-        <span className="text-xs text-red-500">{error.message as string}</span>
+        <span className="text-sm text-red-500 ml-1">
+          {error.message as string}
+        </span>
       )}
     </div>
   );

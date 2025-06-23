@@ -1,9 +1,9 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
 } from "firebase/auth";
 import { auth } from "../libs/firebase";
+import { FirebaseError } from "firebase/app";
 
 export const registerUser = async ({
   email,
@@ -18,21 +18,26 @@ export const registerUser = async ({
       email,
       password
     );
-    console.log("Usuario registrado con éxito:", userCredential.user);
+
     return userCredential.user;
   } catch (error) {
-    if (error instanceof Error) {
-      console.error(
-        "Ocurrió un error al registrar el usuario: ",
-        error.message
-      );
-    } else {
-      console.error(
-        "Ocurrió un error al registrar el usuario: ",
-        String(error)
-      );
+    if (error instanceof FirebaseError) {
+      if (error.code === "auth/email-already-in-use") {
+        throw new Error("Este correo ya está registrado.");
+      }
+
+      if (error.code === "auth/invalid-email") {
+        throw new Error("El correo no es válido.");
+      }
+
+      if (error.code === "auth/weak-password") {
+        throw new Error(
+          "La contraseña es muy débil. Usa al menos 6 caracteres."
+        );
+      }
     }
-    throw new Error("Error al registrar el usuario");
+
+    throw new Error("Error al registrar el usuario.");
   }
 };
 
@@ -50,27 +55,36 @@ export const loginUser = async ({
       password
     );
 
-    console.log("Usuario autenticado con éxito:", userCredential.user);
-    return userCredential.user;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("Ocurrió un error al iniciar sesión: ", error.message);
-    } else {
-      console.error("Ocurrió un error al iniciar sesión: ", String(error));
-    }
-    throw new Error("Error al iniciar sesión");
-  }
-};
+    const idToken = await userCredential.user.getIdToken();
 
-export const logoutUser = async () => {
-  try {
-    await signOut(auth);
+    console.log("Usuario autenticado con éxito:", userCredential.user);
+    console.log("El token para el usuario es: ", idToken);
+
+    return {
+      // uid: user.uid,
+      idToken: idToken,
+    };
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Ocurrió un error al cerrar sesión: ", error.message);
-    } else {
-      console.error("Ocurrió un error al cerrar sesión: ", String(error));
+    if (error instanceof FirebaseError) {
+      if (error.code === "auth/user-not-found") {
+        throw new Error("El usuario no está registrado.");
+      }
+
+      if (error.code === "auth/wrong-password") {
+        throw new Error("La contraseña es incorrecta.");
+      }
+
+      if (error.code === "auth/invalid-email") {
+        throw new Error("El correo no es válido.");
+      }
+
+      if (error.code === "auth/too-many-requests") {
+        throw new Error(
+          "Demasiados intentos fallidos. Intenta de nuevo más tarde."
+        );
+      }
     }
-    throw new Error("Error al cerrar sesión");
+
+    throw new Error("Error al iniciar sesión.");
   }
 };
