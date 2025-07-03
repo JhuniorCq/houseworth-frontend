@@ -8,6 +8,8 @@ export default {
         ["earth-light"]: "#f5f0e6",
         ["earth-strong"]: "#8f775b",
         ["earth-very-strong"]: "#6b5a46",
+        ["ghost-white"]: "#F9FAFB",
+        ["steel-gray"]: "#4b4f56",
       },
       fontFamily: {},
     },

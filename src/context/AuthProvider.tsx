@@ -4,6 +4,8 @@ import { auth } from "../libs/firebase";
 import { FirebaseError } from "firebase/app";
 import type { AppUser } from "../types/user";
 import type { StatusType } from "../types/status";
+import { useLazyGetUserByIdQuery } from "../slices/apiSlice";
+import { isApiSuccessResponse } from "../utils/typeGuard";
 
 type AuthContextType = {
   firebaseUser: User | null;
@@ -24,6 +26,7 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [getUser, {}] = useLazyGetUserByIdQuery();
   const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
   const [appUser, setAppUser] = useState<AppUser | null>(null);
   const [status, setStatus] = useState<StatusType>({
@@ -62,39 +65,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setFirebaseUser(fbUser);
 
       if (!fbUser) {
-        setAppUser(null); // <-- Asegura
+        setAppUser(null);
         setStatus((prev) => ({ ...prev, loading: false }));
         return;
       }
 
-      if (fbUser) {
-        try {
-          const token = await fbUser.getIdToken(); // Obtiene el token actual
+      try {
+        const uid = fbUser.uid;
 
-          // Solicitar al backend los datos del usuario
+        // Solicitar al backend los datos del usuario
+        const result = await getUser(uid).unwrap();
 
-          // Cambiar esto por un POST o crear una ruta GET para traer los datos del usuario
-          const res = await fetch("http://localhost:3000/user/login", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (!res.ok) {
-            throw new Error(
-              "Fallo al obtener datos del usuario desde el backend."
-            );
-          }
-
-          const result = await res.json();
-
-          setAppUser(result.data); // guarda los datos del backend en el estado
-        } catch (error) {
-          console.error("Error obteniendo usuario del backend:", error);
-          setAppUser(null); // por seguridad
-        } finally {
-          setStatus((prev) => ({ ...prev, loading: false }));
+        if (!isApiSuccessResponse(result)) {
+          setAppUser(null);
+          return;
         }
+
+        console.log("Resultado de getUser: ", result);
+
+        setAppUser(result.data as AppUser); // guarda los datos del backend en el estado
+      } catch (error) {
+        console.error("Error obteniendo usuario del backend:", error);
+        setAppUser(null); // por seguridad
+      } finally {
+        setStatus((prev) => ({ ...prev, loading: false }));
       }
     });
 

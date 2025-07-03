@@ -22,10 +22,10 @@ export const auth = getAuth(app);
 // Dato sobre: const auth = getAuth(app)
 
 /*
-  - Todos los usuarios que visitan tu página usan el mismo código de inicialización de Firebase -> Incluido: const auth = getAuth(app)
+  - Todos los usuarios que visitan la página usan el mismo código de inicialización de Firebase -> Incluido: const auth = getAuth(app)
   - Pero, cada uno tiene su propia SESIÓN DE USUARIO aislada en su navegador
   - Firebase guarda esa SESIÓN en IndexedDB del navegador del usuario (por seguridad, no es accesible desde JS directamente)
-  - Por eso, cuando haces F5, Firebase puede recordar automáticametne si ese navegador ya estaba autenticado -> Ya que Firebase carga automáticamente la sesión persistida desde IndexedDB y actualiza el estado del objeto `auth` con el usuario autenticado. (Todo esto será así si es que se está usando en el código a -> onAuthStateChanged -> Para actualizar el `auth`)
+  - Por eso, cuando haces F5, Firebase puede recordar automáticametne si ese navegador ya estaba autenticado -> Ya que Firebase carga automáticamente la sesión persistida desde IndexedDB y actualiza el estado del objeto `auth` con el usuario autenticado. (Todo esto último será así si es que se está usando en el código a -> onAuthStateChanged -> Para actualizar el `auth`)
 
   - El auth del código maneja la sesión local en el dispositivo del usuario
 */

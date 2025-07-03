@@ -53,14 +53,14 @@ const Input = <T extends FieldValues>({
           {label}
         </label>
       )}
-      <div className="relative flex items-center">
+      <div className="w-full relative flex items-center">
         <input
           id={`${id}-${String(name)}`}
           type={inputType}
           className={
             inputStyles
               ? inputStyles
-              : "px-3 py-2 text-sm outline-none border-[2px] border-gray-200 rounded transition-colors duration-300 ease-in-out focus:border-gray-500"
+              : "w-full px-3 py-2 text-sm outline-none border-[2px] border-gray-200 rounded transition-colors duration-300 ease-in-out focus:border-gray-500"
           }
           placeholder={placeholder}
           {...register(name, {

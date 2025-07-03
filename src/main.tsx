@@ -7,11 +7,11 @@ import App from "./App.tsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
-  <AuthProvider>
-    <Provider store={store}>
+  <Provider store={store}>
+    <AuthProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </Provider>
-  </AuthProvider>
+    </AuthProvider>
+  </Provider>
 );

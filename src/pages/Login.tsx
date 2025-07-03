@@ -41,10 +41,10 @@ const Login = () => {
     try {
       setStatus((prev) => ({ ...prev, loading: true }));
 
-      // Obtengo el idToken de firebase
-      const { idToken } = await loginUser({ email, password });
+      // No es necesario que devuelva el idToken -> En apiSlice ya se obtiene con prepareHeaders
+      await loginUser({ email, password });
 
-      const loginResult = await login({ idToken }).unwrap();
+      const loginResult = await login().unwrap();
 
       setStatus((prev) => ({ ...prev, loading: false }));
 

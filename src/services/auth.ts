@@ -55,15 +55,16 @@ export const loginUser = async ({
       password
     );
 
-    const idToken = await userCredential.user.getIdToken();
-
     console.log("Usuario autenticado con éxito:", userCredential.user);
-    console.log("El token para el usuario es: ", idToken);
 
-    return {
-      // uid: user.uid,
-      idToken: idToken,
-    };
+    // No es necesario que devuelva el idToken -> En apiSlice ya se obtiene con prepareHeaders
+    // const idToken = await userCredential.user.getIdToken();
+
+    // console.log("El token para el usuario es: ", idToken);
+
+    // return {
+    //   idToken: idToken,
+    // };
   } catch (error) {
     if (error instanceof FirebaseError) {
       if (error.code === "auth/user-not-found") {
