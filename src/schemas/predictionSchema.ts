@@ -150,6 +150,24 @@ export const housePricePredictionSchema = z.object({
   // ),
 });
 
+export const multipleHomePricePrediction = z.object({
+  excelFile: z
+    .custom<File>()
+    .refine(
+      (file) =>
+        file &&
+        [
+          "application/vnd.ms-excel",
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        ].includes(file.type),
+      { message: "Solo se permiten archivos .xls o .xlsx" }
+    ),
+});
+
+export type MultipleHomePricePrediction = z.infer<
+  typeof multipleHomePricePrediction
+>;
+
 export type HousePricePredictionForm = z.infer<
   typeof housePricePredictionSchema
 >;

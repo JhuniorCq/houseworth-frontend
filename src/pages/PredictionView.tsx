@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   housePricePredictionSchema,
   type HousePricePredictionForm,
-} from "../schemas/housePricePredictionSchema";
+} from "../schemas/predictionSchema";
 import {
   neighborhoodsOptions,
   overallQualOptions,
