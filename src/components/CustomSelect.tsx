@@ -8,7 +8,17 @@ import type { OptionType } from "../types/select";
 import { useId } from "react";
 
 const customStyles: StylesConfig<OptionType, boolean> = {
-  // Arreglar estilos para los Select
+  control: (base, state) => ({
+    ...base,
+    borderWidth: "2px",
+    borderColor: state.isFocused ? "#6b7280" : "#e5e7eb",
+    outline: "none",
+    boxShadow: "none",
+    transition: "border-color 0.3s ease-in-out",
+    "&:hover": {
+      cursor: "text",
+    },
+  }),
 };
 
 interface CustomSelectProps
@@ -36,7 +46,7 @@ const CustomSelect = ({
   const id = useId();
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-2">
       <label
         htmlFor={`${id}-${props.name}`}
         className="text-sm text-gray-600 after:content-['*'] after:ml-1 after:text-red-500"
@@ -51,10 +61,11 @@ const CustomSelect = ({
         styles={customStyles}
         onChange={onChange}
         value={value}
+        menuPortalTarget={document.body}
         {...props}
       />
       {errorMessage && (
-        <span className="text-xs text-red-500">{errorMessage}</span>
+        <span className="text-sm text-red-500 ml-1">{errorMessage}</span>
       )}
     </div>
   );

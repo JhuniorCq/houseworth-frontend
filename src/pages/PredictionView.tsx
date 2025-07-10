@@ -30,7 +30,14 @@ const PredictionView = () => {
   });
 
   const onSubmit: SubmitHandler<HousePricePredictionForm> = (data) => {
-    console.log("Los datos a enviar: ", data);
+    const body = {
+      ...data,
+      overallQual: data.overallQual.value,
+      neighborhood: data.neighborhood.value,
+    };
+    console.log("Los datos a enviar: ", body);
+
+    //
   };
 
   const onError: SubmitErrorHandler<HousePricePredictionForm> = (errors) => {
@@ -57,13 +64,6 @@ const PredictionView = () => {
               register={register}
               errors={errors}
             />
-            {/* <Input
-              label="Área del garaje: "
-              type="number"
-              name="garageArea"
-              register={register}
-              errors={errors}
-            /> */}
             <Input
               label="Año de construcción: "
               type="number"
@@ -78,28 +78,6 @@ const PredictionView = () => {
               register={register}
               errors={errors}
             />
-            {/* <Input
-              label="Área del primer piso: "
-              type="number"
-              name="firstFlrSF"
-              register={register}
-              errors={errors}
-            />
-            <Input
-              label="Área del segundo piso: "
-              type="number"
-              name="secondFlrSF"
-              register={register}
-              errors={errors}
-            /> */}
-
-            {/* <Input
-              label="Año de última remodelación: "
-              type="number"
-              name="yearRemodAdd"
-              register={register}
-              errors={errors}
-            /> */}
           </div>
           {/* Agregar los Controller */}
           <div className="w-full flex flex-col gap-4">
@@ -141,86 +119,6 @@ const PredictionView = () => {
                 />
               )}
             />
-
-            {/* <Controller
-              name="houseStyle"
-              control={control}
-              render={({ field, fieldState }) => (
-                <CustomSelect
-                  label="Estilo de la vivienda: "
-                  name={field.name}
-                  options={houseStyleOptions}
-                  placeholder=""
-                  onChange={field.onChange}
-                  value={field.value}
-                  errorMessage={fieldState.error?.message}
-                />
-              )}
-            />
-
-            <Controller
-              name="exterQual"
-              control={control}
-              render={({ field, fieldState }) => (
-                <CustomSelect
-                  label="Calidad del material exterior: "
-                  name={field.name}
-                  options={exterQualOptions}
-                  placeholder=""
-                  onChange={field.onChange}
-                  value={field.value}
-                  errorMessage={fieldState.error?.message}
-                />
-              )}
-            />
-
-            <Controller
-              name="kitchenQual"
-              control={control}
-              render={({ field, fieldState }) => (
-                <CustomSelect
-                  label="Calidad de la cocina: "
-                  name={field.name}
-                  options={kitchenQualOptions}
-                  placeholder=""
-                  onChange={field.onChange}
-                  value={field.value}
-                  errorMessage={fieldState.error?.message}
-                />
-              )}
-            />
-
-            <Controller
-              name="bsmtQual"
-              control={control}
-              render={({ field, fieldState }) => (
-                <CustomSelect
-                  label="Calidad del sótano: "
-                  name=""
-                  options={bsmtQualOptions}
-                  placeholder=""
-                  onChange={field.onChange}
-                  value={field.value}
-                  errorMessage={fieldState.error?.message}
-                />
-              )}
-            />
-
-            <Controller
-              name="garageFinish"
-              control={control}
-              render={({ field, fieldState }) => (
-                <CustomSelect
-                  label="Acabado del interior del garaje: "
-                  name=""
-                  options={garageFinishOptions}
-                  placeholder=""
-                  onChange={field.onChange}
-                  value={field.value}
-                  errorMessage={fieldState.error?.message}
-                />
-              )}
-            /> */}
           </div>
         </div>
 

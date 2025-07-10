@@ -55,6 +55,24 @@ export const api = createApi({
         method: "GET",
       }),
     }),
+
+    makePrediction: builder.mutation<
+      ApiResponse<any>,
+      {
+        overallQual: number;
+        neighborhood: string;
+        grLivArea: number;
+        garageCars: number;
+        totalBsmtSF: number;
+        yearBuilt: number;
+      }
+    >({
+      query: (houseData) => ({
+        url: "/prediction",
+        method: "POST",
+        body: houseData,
+      }),
+    }),
   }),
 });
 
