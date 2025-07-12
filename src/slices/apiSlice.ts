@@ -3,6 +3,7 @@ import { SERVER_URL } from "../utils/constants";
 import type { ApiResponse } from "../types/apiResponse";
 import { getAuth } from "firebase/auth";
 import type { AppUser } from "../types/user";
+import type { HouseData, PredictionResult } from "../types/prediction";
 
 export const api = createApi({
   reducerPath: "api",
@@ -56,21 +57,31 @@ export const api = createApi({
       }),
     }),
 
-    makePrediction: builder.mutation<
-      ApiResponse<any>,
-      {
-        overallQual: number;
-        neighborhood: string;
-        grLivArea: number;
-        garageCars: number;
-        totalBsmtSF: number;
-        yearBuilt: number;
-      }
-    >({
+    makePrediction: builder.mutation<ApiResponse<PredictionResult>, HouseData>({
       query: (houseData) => ({
         url: "/prediction",
         method: "POST",
         body: houseData,
+      }),
+    }),
+
+    performMultiplePrediction: builder.mutation<ApiResponse<void>, File>({
+      query: (excelFile) => {
+        const formData = new FormData();
+        formData.append("excelFile", excelFile);
+
+        return {
+          url: "/prediction/multiple",
+          method: "POST",
+          body: formData,
+        };
+      },
+    }),
+
+    getAllPredictions: builder.query<ApiResponse<PredictionResult[]>, void>({
+      query: () => ({
+        url: "/prediction",
+        method: "GET",
       }),
     }),
   }),
@@ -80,4 +91,7 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useLazyGetUserByIdQuery,
+  useMakePredictionMutation,
+  useGetAllPredictionsQuery,
+  usePerformMultiplePredictionMutation,
 } = api;

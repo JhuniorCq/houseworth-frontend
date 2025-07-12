@@ -6,6 +6,8 @@ import Home from "../pages/Home";
 import ProtectedRoute from "./ProtectedRoute";
 import MultiplePredictionView from "../pages/MultiplePredictionView";
 import PredictionHistoryView from "../pages/PredictionHistoryView";
+import PredictionDetails from "../pages/PredictionDetails";
+import PredictionResults from "../pages/PredictionResults";
 
 const AppRoutes = () => {
   return (
@@ -20,6 +22,8 @@ const AppRoutes = () => {
           path="/multiple-prediction"
           element={<MultiplePredictionView />}
         />
+        <Route path="/prediction-results" element={<PredictionResults />} />
+        <Route path="/prediction-results/:id" element={<PredictionDetails />} />
         <Route path="/prediction-history" element={<PredictionHistoryView />} />
       </Route>
       <Route path="/*" element={<div>Error 404 - Not Found</div>} />

@@ -5,7 +5,7 @@ import { LIST_OF_FEATURES } from "../utils/constants";
 const Home = () => {
   const { firebaseUser, appUser, logout } = useAuth();
   return (
-    <section className="px-8 py-12 bg-ghost-white">
+    <section className="min-h-screen px-8 py-12 bg-ghost-white">
       <div>
         <p>Estás en el Home, tu UID es: {firebaseUser?.uid}</p>
         <p>Hola: {appUser?.username ?? "Falta traer los datos del back"}</p>

@@ -17,6 +17,11 @@ import {
   overallQualOptions,
 } from "../utils/selectOptions";
 import PredictionBase from "../components/PredictionBase";
+import { useMakePredictionMutation } from "../slices/apiSlice";
+import type { HouseData } from "../types/prediction";
+import { showToast } from "../utils/sweetAlert";
+import { useNavigate } from "react-router-dom";
+import { isApiSuccessResponse } from "../utils/typeGuard";
 
 const PredictionView = () => {
   const {
@@ -24,20 +29,49 @@ const PredictionView = () => {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm<HousePricePredictionForm>({
     resolver: zodResolver(housePricePredictionSchema),
-    defaultValues: {},
   });
+  const [makePrediction, { isLoading }] = useMakePredictionMutation();
+
+  const navigate = useNavigate();
+
+  const handleMakePrediction = async (houseData: HouseData) => {
+    try {
+      const result = await makePrediction(houseData).unwrap();
+
+      if (!isApiSuccessResponse(result)) return;
+
+      showToast({
+        title: result.message,
+        icon: "success",
+      });
+
+      // Resetear el formulario
+      reset();
+
+      // Navegar a la vista de resultados
+      navigate("/prediction-results/1", { state: result.data });
+    } catch (error) {
+      console.error("No se pudo realizar la predicción: ", error);
+
+      showToast({
+        title: "No se pudo realizar la predicción.",
+        icon: "error",
+      });
+    }
+  };
 
   const onSubmit: SubmitHandler<HousePricePredictionForm> = (data) => {
-    const body = {
+    const body: HouseData = {
       ...data,
       overallQual: data.overallQual.value,
       neighborhood: data.neighborhood.value,
     };
     console.log("Los datos a enviar: ", body);
 
-    //
+    handleMakePrediction(body);
   };
 
   const onError: SubmitErrorHandler<HousePricePredictionForm> = (errors) => {
@@ -58,21 +92,21 @@ const PredictionView = () => {
         <div className="w-full flex flex-col gap-4 mb-4 lg:flex-row lg:gap-12">
           <div className="w-full flex flex-col gap-4">
             <Input
-              label="Área habitale sobre el suelo: "
+              label="Área habitale sobre el suelo (ft²) "
               type="number"
               name="grLivArea"
               register={register}
               errors={errors}
             />
             <Input
-              label="Año de construcción: "
+              label="Año de construcción "
               type="number"
               name="yearBuilt"
               register={register}
               errors={errors}
             />
             <Input
-              label="Área total del sótano: "
+              label="Área total del sótano (ft²) "
               type="number"
               name="totalBsmtSF"
               register={register}
@@ -82,7 +116,7 @@ const PredictionView = () => {
           {/* Agregar los Controller */}
           <div className="w-full flex flex-col gap-4">
             <Input
-              label="Número de autos en el garaje: "
+              label="Número de autos en el garaje "
               type="number"
               name="garageCars"
               register={register}
@@ -93,7 +127,7 @@ const PredictionView = () => {
               control={control}
               render={({ field, fieldState }) => (
                 <CustomSelect
-                  label="Calidad general de la vivienda: "
+                  label="Calidad general de la vivienda "
                   name={field.name}
                   options={overallQualOptions}
                   placeholder=""
@@ -109,7 +143,7 @@ const PredictionView = () => {
               control={control}
               render={({ field, fieldState }) => (
                 <CustomSelect
-                  label="Barrio: "
+                  label="Barrio "
                   name={field.name}
                   options={neighborhoodsOptions}
                   placeholder=""
@@ -122,7 +156,13 @@ const PredictionView = () => {
           </div>
         </div>
 
-        <Button type="submit">Estimar precio</Button>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          styles="bg-earth text-white text-sm px-6 py-2.5 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-strong disabled:cursor-not-allowed"
+        >
+          {isLoading ? "Espere porfavor ..." : "Estimar precio"}
+        </Button>
       </form>
     </PredictionBase>
   );

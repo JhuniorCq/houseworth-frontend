@@ -93,11 +93,8 @@ const MultiplePredictionView = () => {
               </p>
             </div>
           </div>
-
-          {/* Contenedor para subir el excel */}
           <ExcelForm />
         </div>
-        <form></form>
       </div>
     </PredictionBase>
   );

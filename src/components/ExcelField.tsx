@@ -40,7 +40,7 @@ const ExcelField = ({ setValue, errors }: ExcelFieldProps) => {
         shouldDirty: true,
         shouldTouch: true,
       });
-      // Se envía al back -> Usar formData
+      // Se envía al back -> Usar FormData
     }
   };
   return (

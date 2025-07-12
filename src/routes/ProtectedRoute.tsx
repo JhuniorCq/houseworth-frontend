@@ -19,7 +19,7 @@ const ProtectedRoute = ({
 
   // Mientras se verifica la sesión -> Si no hay esión  el usuario será redirijido
   if (loading) {
-    return <div>Cargando la sesisón ...</div>;
+    return <div>Cargando la sesión ...</div>;
   }
 
   // Al obtener a firebaseUser acá mismo, ya no es necesario que me pasen un valor para "isAllowed"
