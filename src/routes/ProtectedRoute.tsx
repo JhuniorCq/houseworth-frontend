@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
+import Loader from "../components/Loader";
 
 type ProtectedRouteProps = {
   // isAllowed: boolean;
@@ -19,7 +20,7 @@ const ProtectedRoute = ({
 
   // Mientras se verifica la sesión -> Si no hay esión  el usuario será redirijido
   if (loading) {
-    return <div>Cargando la sesión ...</div>;
+    return <Loader />;
   }
 
   // Al obtener a firebaseUser acá mismo, ya no es necesario que me pasen un valor para "isAllowed"

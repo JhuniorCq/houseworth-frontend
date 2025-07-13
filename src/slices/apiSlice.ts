@@ -25,6 +25,7 @@ export const api = createApi({
       return headers;
     },
   }),
+  tagTypes: ["Predictions"],
   endpoints: (builder) => ({
     registerUser: builder.mutation<
       ApiResponse<void>,
@@ -67,9 +68,13 @@ export const api = createApi({
         method: "POST",
         body: houseData,
       }),
+      invalidatesTags: ["Predictions"],
     }),
 
-    performMultiplePrediction: builder.mutation<ApiResponse<void>, File>({
+    performMultiplePrediction: builder.mutation<
+      ApiResponse<PredictionResult[]>,
+      File
+    >({
       query: (excelFile) => {
         const formData = new FormData();
         formData.append("excelFile", excelFile);
@@ -80,6 +85,7 @@ export const api = createApi({
           body: formData,
         };
       },
+      invalidatesTags: ["Predictions"],
     }),
 
     getAllPredictions: builder.query<ApiResponse<HistoryResult>, void>({
@@ -87,6 +93,7 @@ export const api = createApi({
         url: "/prediction",
         method: "GET",
       }),
+      providesTags: ["Predictions"],
     }),
   }),
 });

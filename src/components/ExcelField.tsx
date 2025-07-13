@@ -40,7 +40,6 @@ const ExcelField = ({ setValue, errors }: ExcelFieldProps) => {
         shouldDirty: true,
         shouldTouch: true,
       });
-      // Se envía al back -> Usar FormData
     }
   };
   return (
@@ -57,14 +56,14 @@ const ExcelField = ({ setValue, errors }: ExcelFieldProps) => {
           o haz click para seleccionar un archivo
         </p>
 
-        <p className="my-1 text-sm px-5 py-3 bg-gray-500 text-white rounded-md transition-colors duration-300 ease-in-out hover:bg-steel-gray-strong min-[420px]:my-2 min-[420px]:px-3">
+        <div className="my-1 text-sm px-5 py-3 bg-gray-500 text-white rounded-md transition-colors duration-300 ease-in-out hover:bg-steel-gray-strong min-[420px]:my-2 min-[420px]:px-3">
           <div className="text-center flex justify-center items-center gap-2">
             <MdFileUpload className="text-lg shrink-0" />
             <p className="hidden min-[420px]:block">
               {selectedFileName ? "Cambia archivo" : "Seleccionar un archivo"}
             </p>
           </div>
-        </p>
+        </div>
 
         {selectedFileName && !errors.excelFile && (
           <p className="text-green-700 text-sm font-medium">

@@ -5,18 +5,14 @@ import { GrHistory } from "react-icons/gr";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import Button from "../components/Button";
 import type { PredictionResult } from "../types/prediction";
-import { overallQualOptions } from "../utils/selectOptions";
-import { searchNeighborhood } from "../utils/logic";
+import { searchNeighborhood, searchOverallQual } from "../utils/logic";
 
 const PredictionDetails = () => {
   const { state: predictionData }: { state: PredictionResult } = useLocation();
 
   if (!predictionData) return <Navigate to="/prediction" />;
 
-  const overallQual =
-    overallQualOptions.find((o) => o.value === predictionData.overallQual)
-      ?.label ?? "-";
-
+  const overallQual = searchOverallQual(predictionData.overallQual);
   const neighborhood = searchNeighborhood(predictionData.neighborhood);
 
   return (

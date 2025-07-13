@@ -3,18 +3,29 @@ import { useAuth } from "../context/AuthProvider";
 import { LIST_OF_FEATURES } from "../utils/constants";
 
 const Home = () => {
-  const { firebaseUser, appUser, logout } = useAuth();
+  const { /*appUser,*/ logout } = useAuth();
   return (
-    <section className="min-h-screen px-8 py-12 bg-ghost-white">
-      <div>
-        <p>Estás en el Home, tu UID es: {firebaseUser?.uid}</p>
-        <p>Hola: {appUser?.username ?? "Falta traer los datos del back"}</p>
+    <section className="min-h-screen px-8 py-12 bg-ghost-white flex flex-col gap-16">
+      <div className="flex items-center justify-end gap-3">
+        {/* <p className="text-sm">
+          Bienvenido,{" "}
+          <span className="text-earth-strong font-semibold">
+            {appUser?.username}
+          </span>
+        </p> */}
 
-        <button onClick={logout}>Cerrar sesión</button>
+        <button
+          className="bg-earth text-white text-sm px-4 py-2 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-strong"
+          onClick={logout}
+        >
+          Cerrar sesión
+        </button>
       </div>
 
-      <div className="flex flex-col gap-10">
-        <h1 className="text-center text-2xl font-semibold">HouseWorth</h1>
+      <div className="self-center flex flex-col gap-10">
+        <h1 className="text-center text-2xl text-earth-very-strong font-semibold xl:text-3xl">
+          HouseWorth
+        </h1>
 
         <ul className="w-full flex justify-center gap-6 flex-wrap">
           {LIST_OF_FEATURES.map((f) => (

@@ -52,7 +52,7 @@ const PredictionView = () => {
       reset();
 
       // Navegar a la vista de resultados
-      navigate("/prediction-results/1", { state: result.data });
+      navigate("/prediction-results/0", { state: result.data });
     } catch (error) {
       console.error("No se pudo realizar la predicción: ", error);
 
