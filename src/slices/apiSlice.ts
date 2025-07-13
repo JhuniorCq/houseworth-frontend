@@ -3,7 +3,11 @@ import { SERVER_URL } from "../utils/constants";
 import type { ApiResponse } from "../types/apiResponse";
 import { getAuth } from "firebase/auth";
 import type { AppUser } from "../types/user";
-import type { HouseData, PredictionResult } from "../types/prediction";
+import type {
+  HistoryResult,
+  HouseData,
+  PredictionResult,
+} from "../types/prediction";
 
 export const api = createApi({
   reducerPath: "api",
@@ -78,7 +82,7 @@ export const api = createApi({
       },
     }),
 
-    getAllPredictions: builder.query<ApiResponse<PredictionResult[]>, void>({
+    getAllPredictions: builder.query<ApiResponse<HistoryResult>, void>({
       query: () => ({
         url: "/prediction",
         method: "GET",

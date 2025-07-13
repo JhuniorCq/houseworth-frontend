@@ -12,6 +12,13 @@ export type PredictionResult = {
   predictionTime: string;
 };
 
+export type HistoryResult = {
+  predictions: PredictionResult[];
+  totalAmount: number;
+  simpleAmount: number;
+  multipleAmount: number;
+};
+
 export type HouseData = {
   overallQual: number;
   neighborhood: string;

@@ -5,10 +5,8 @@ import { GrHistory } from "react-icons/gr";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import Button from "../components/Button";
 import type { PredictionResult } from "../types/prediction";
-import {
-  neighborhoodsOptions,
-  overallQualOptions,
-} from "../utils/selectOptions";
+import { overallQualOptions } from "../utils/selectOptions";
+import { searchNeighborhood } from "../utils/logic";
 
 const PredictionDetails = () => {
   const { state: predictionData }: { state: PredictionResult } = useLocation();
@@ -19,9 +17,7 @@ const PredictionDetails = () => {
     overallQualOptions.find((o) => o.value === predictionData.overallQual)
       ?.label ?? "-";
 
-  const neighborhood =
-    neighborhoodsOptions.find((n) => n.value === predictionData.neighborhood)
-      ?.label ?? "-";
+  const neighborhood = searchNeighborhood(predictionData.neighborhood);
 
   return (
     <section className="min-h-screen p-8 bg-ghost-white flex flex-col gap-5 min-[520px]:px-18 sm:px-24 md:px-28 lg:justify-center xl:px-44 2xl:px-60">
