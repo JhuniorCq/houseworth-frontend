@@ -4,8 +4,9 @@ import { auth } from "../libs/firebase";
 import { FirebaseError } from "firebase/app";
 import type { AppUser } from "../types/user";
 import type { StatusType } from "../types/status";
-import { useLazyGetUserByIdQuery } from "../slices/apiSlice";
+import { api, useLazyGetUserByIdQuery } from "../slices/apiSlice";
 import { isApiSuccessResponse } from "../utils/typeGuard";
+import { useDispatch } from "react-redux";
 
 type AuthContextType = {
   firebaseUser: User | null;
@@ -32,6 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [status, setStatus] = useState<StatusType>({
     loading: true,
   });
+  const dispatch = useDispatch();
 
   // Obtener el ID Token actual para enviar al backend
   const getIdToken = async () => {
@@ -46,6 +48,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await signOut(auth); // Aviso a Firebase para que cierre la sesión de este usuario -> Y Firebase cerrará la sesión y borrará la sesión que persistía en IndexedDB
       setFirebaseUser(null);
       setAppUser(null);
+
+      dispatch(api.util.resetApiState());
 
       console.log("Sesión cerrada con éxito.");
     } catch (error) {

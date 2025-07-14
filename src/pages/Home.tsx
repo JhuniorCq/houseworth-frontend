@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthProvider";
 import { LIST_OF_FEATURES } from "../utils/constants";
 
 const Home = () => {
-  const { logout } = useAuth();
+  const { /*appUser,*/ logout } = useAuth();
   return (
     <section className="min-h-screen px-8 py-12 bg-ghost-white flex flex-col gap-16">
       <div className="flex items-center justify-end gap-3">
