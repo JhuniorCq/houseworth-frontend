@@ -45,11 +45,12 @@ const PredictionHistoryView = () => {
 
       {!isLoading && !isError && predictions && (
         <section className="min-h-screen bg-ghost-white p-8 flex flex-col gap-5 md:px-8 lg:justify-center 2xl:px-36">
-          <span className="text-earth-very-strong font-semibold bg-transparent cursor-pointer self-start flex items-center gap-2">
+          <span
+            className="text-earth-very-strong font-semibold bg-transparent cursor-pointer self-start flex items-center gap-2"
+            onClick={back}
+          >
             <IoIosArrowRoundBack className="text-xl" />
-            <button className="text-[13px]" onClick={back}>
-              Volver
-            </button>
+            <button className="text-[13px]">Volver</button>
           </span>
 
           <div className="w-full flex flex-col gap-2">
