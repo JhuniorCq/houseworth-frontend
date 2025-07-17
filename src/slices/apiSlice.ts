@@ -88,11 +88,22 @@ export const api = createApi({
       invalidatesTags: ["Predictions"],
     }),
 
-    getAllPredictions: builder.query<ApiResponse<HistoryResult>, void>({
-      query: () => ({
-        url: "/prediction",
-        method: "GET",
-      }),
+    getAllPredictions: builder.query<
+      ApiResponse<HistoryResult>,
+      { limit?: number }
+    >({
+      query: ({ limit }) => {
+        const params = new URLSearchParams();
+
+        if (limit) {
+          params.append("limit", String(limit));
+        }
+
+        return {
+          url: `/prediction?${String(params)}`,
+          method: "GET",
+        };
+      },
       providesTags: ["Predictions"],
     }),
   }),

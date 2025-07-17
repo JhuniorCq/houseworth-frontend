@@ -21,14 +21,14 @@ const FuncionalityCard = ({
   ...props
 }: FuncionalityCardProps) => {
   return (
-    <li className="min-w-72 max-w-96 p-5 py-7 shadow bg-white flex flex-col items-center gap-4 rounded-lg">
+    <li className="min-w-72 max-w-96 px-6 py-7 shadow-md bg-white flex flex-col items-center gap-4 rounded-lg">
       <span className="bg-earth/50 w-14 h-14 flex justify-center items-center rounded-full">
         <props.icon className="text-earth-strong text-2xl" />
       </span>
 
       <h2 className="text-center text-lg font-semibold">{name}</h2>
 
-      <p className="text-center text-gray-700">{description}</p>
+      <p className="text-sm text-center text-gray-700">{description}</p>
 
       <ul className="flex flex-col items-center mb-1">
         {characteristics &&
@@ -44,7 +44,7 @@ const FuncionalityCard = ({
 
       <Link
         to={redirecTo}
-        className="bg-earth text-white text-sm font-semibold px-6 py-2.5 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-strong sm:text-base"
+        className="bg-earth-strong text-white text-sm font-semibold px-6 py-2.5 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-very-strong"
       >
         {buttonName}
       </Link>

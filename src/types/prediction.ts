@@ -1,4 +1,5 @@
 export type PredictionResult = {
+  id: number;
   price: number;
   grLivArea: number;
   garageCars: number;
@@ -10,6 +11,7 @@ export type PredictionResult = {
   isLuxury: boolean;
   predictionDate: string;
   predictionTime: string;
+  excelId: number | null;
 };
 
 export type HistoryResult = {

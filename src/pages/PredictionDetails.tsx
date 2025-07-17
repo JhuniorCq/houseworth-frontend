@@ -1,22 +1,35 @@
 import { FaCheckCircle, FaFileExcel, FaFilePdf, FaHome } from "react-icons/fa";
 import { MdFileUpload } from "react-icons/md";
-import { IoMdAdd } from "react-icons/io";
+import { IoIosArrowRoundBack, IoMdAdd } from "react-icons/io";
 import { GrHistory } from "react-icons/gr";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import type { PredictionResult } from "../types/prediction";
 import { searchNeighborhood, searchOverallQual } from "../utils/logic";
 
 const PredictionDetails = () => {
   const { state: predictionData }: { state: PredictionResult } = useLocation();
+  const navigate = useNavigate();
 
   if (!predictionData) return <Navigate to="/prediction" />;
 
   const overallQual = searchOverallQual(predictionData.overallQual);
   const neighborhood = searchNeighborhood(predictionData.neighborhood);
 
+  const back = () => {
+    navigate(-1);
+  };
+
   return (
-    <section className="min-h-screen p-8 bg-ghost-white flex flex-col gap-5 min-[520px]:px-18 sm:px-24 md:px-28 lg:justify-center xl:px-44 2xl:px-60">
+    <section className="px-8 pt-8 pb-12 bg-ghost-white flex flex-col gap-5 min-[520px]:px-18 sm:px-24 sm:pt-12 sm:pb-16 md:px-28 lg:justify-center lg:pt-20 lg:pb-28 xl:px-44 2xl:px-60">
+      <span
+        className="text-earth-very-strong font-semibold bg-transparent cursor-pointer self-start flex items-center gap-2"
+        onClick={back}
+      >
+        <IoIosArrowRoundBack className="text-xl" />
+        <button className="text-[13px]">Volver</button>
+      </span>
+
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold text-earth-very-strong">
           Resultado de la Predicción

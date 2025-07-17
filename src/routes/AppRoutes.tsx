@@ -9,6 +9,7 @@ import PredictionHistoryView from "../pages/PredictionHistoryView";
 import PredictionDetails from "../pages/PredictionDetails";
 import PredictionResults from "../pages/PredictionResults";
 import MultiplePredictionResults from "../pages/MultiplePredictionResults";
+import ProtectedApp from "../pages/ProtectedApp";
 
 const AppRoutes = () => {
   return (
@@ -17,19 +18,27 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/sign-up" element={<Register />} />
       <Route element={<ProtectedRoute />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/prediction" element={<PredictionView />} />
-        <Route
-          path="/multiple-prediction"
-          element={<MultiplePredictionView />}
-        />
-        <Route path="/prediction-results" element={<PredictionResults />} />
-        <Route path="/prediction-results/:id" element={<PredictionDetails />} />
-        <Route
-          path="/multiple-prediction-results"
-          element={<MultiplePredictionResults />}
-        />
-        <Route path="/prediction-history" element={<PredictionHistoryView />} />
+        <Route element={<ProtectedApp />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/prediction" element={<PredictionView />} />
+          <Route
+            path="/multiple-prediction"
+            element={<MultiplePredictionView />}
+          />
+          <Route path="/prediction-results" element={<PredictionResults />} />
+          <Route
+            path="/prediction-results/:id"
+            element={<PredictionDetails />}
+          />
+          <Route
+            path="/multiple-prediction-results"
+            element={<MultiplePredictionResults />}
+          />
+          <Route
+            path="/prediction-history"
+            element={<PredictionHistoryView />}
+          />
+        </Route>
       </Route>
       <Route path="/*" element={<div>Error 404 - Not Found</div>} />
     </Routes>

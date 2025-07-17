@@ -1,9 +1,4 @@
-import {
-  Controller,
-  useForm,
-  type SubmitErrorHandler,
-  type SubmitHandler,
-} from "react-hook-form";
+import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import CustomSelect from "../components/CustomSelect";
@@ -69,14 +64,8 @@ const PredictionView = () => {
       overallQual: data.overallQual.value,
       neighborhood: data.neighborhood.value,
     };
-    console.log("Los datos a enviar: ", body);
 
     handleMakePrediction(body);
-  };
-
-  const onError: SubmitErrorHandler<HousePricePredictionForm> = (errors) => {
-    console.error("Errores de validación: ", errors);
-    // TODO: Para enviar los datos al back, ahí si actualizo el valor que enviaré de los Select
   };
 
   return (
@@ -87,7 +76,7 @@ const PredictionView = () => {
     >
       <form
         className="w-full bg-transparent px-10 flex flex-col items-center gap-6 sm:px-16 xl:px-24 2xl:px-36"
-        onSubmit={handleSubmit(onSubmit, onError)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="w-full flex flex-col gap-4 mb-4 lg:flex-row lg:gap-12">
           <div className="w-full flex flex-col gap-4">
@@ -113,7 +102,7 @@ const PredictionView = () => {
               errors={errors}
             />
           </div>
-          {/* Agregar los Controller */}
+
           <div className="w-full flex flex-col gap-4">
             <Input
               label="Número de autos en el garaje "

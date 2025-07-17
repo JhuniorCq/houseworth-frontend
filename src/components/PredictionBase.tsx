@@ -16,10 +16,10 @@ const PredictionBase = ({ children, title, description }: PredictionBase) => {
   };
 
   return (
-    <section className="w-full min-h-screen bg-ghost-white flex justify-center items-center md:px-16 md:py-12 lg:px-28 xl:px-36 2xl:px-44">
+    <section className="w-full bg-ghost-white flex justify-center items-center md:px-16 md:py-12 lg:px-28 xl:px-36 2xl:px-44">
       <div className="w-full flex flex-col md:shadow-md md:rounded-3xl md:overflow-hidden">
-        <div className="h-56 px-8 py-7 relative flex items-center after:content-[''] after:absolute after:inset-0 after:w-full after:h-full after:bg-black/50 after:z-40 md:h-60 lg-px-10">
-          <div className="w-full relative flex flex-col gap-4 z-50">
+        <div className="h-56 px-8 py-7 relative flex items-center after:content-[''] after:absolute after:inset-0 after:w-full after:h-full after:bg-black/50 md:h-60 lg-px-10">
+          <div className="w-full relative flex flex-col gap-4 z-10">
             <h1 className="font-bold text-3xl text-center text-white">
               {title}
             </h1>

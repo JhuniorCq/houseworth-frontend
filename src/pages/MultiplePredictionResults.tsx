@@ -36,7 +36,7 @@ const MultiplePredictionResults = () => {
   };
 
   return (
-    <section className="min-h-screen bg-ghost-white p-8 flex flex-col gap-5 md:px-8 lg:justify-center 2xl:px-36">
+    <section className="bg-ghost-white px-8 pt-8 pb-12 flex flex-col gap-5 sm:pt-12 sm:pb-16 md:px-16 lg:justify-center lg:px-20 lg:pt-20 lg:pb-28 2xl:px-36">
       <span className="text-earth-very-strong font-semibold bg-transparent cursor-pointer self-start flex items-center gap-2">
         <IoIosArrowRoundBack className="text-xl" />
         <button className="text-[13px]" onClick={back}>
@@ -168,8 +168,12 @@ const MultiplePredictionResults = () => {
                             prediction: p,
                           })
                         }
+                        title="Ver detalles"
                       />
-                      <FaDownload className="text-earth-strong transition-colors duration-300 ease-in-out hover:text-earth-very-strong cursor-pointer" />
+                      <FaDownload
+                        className="text-earth-strong transition-colors duration-300 ease-in-out hover:text-earth-very-strong cursor-pointer"
+                        title="Descargar PDF"
+                      />
                     </div>
                   </td>
                 </tr>
