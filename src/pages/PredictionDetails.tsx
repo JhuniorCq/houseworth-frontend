@@ -15,6 +15,8 @@ import { searchNeighborhood, searchOverallQual } from "../utils/logic";
 import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
 import PDF from "../components/PDF";
 
+// TODO: No mostrar el N° {ID} -> Ya que se muestra el ID de la predicción en base a TODAS las predicciones existentes en la BD
+
 const PredictionDetails = () => {
   const { id } = useParams();
   const { state: predictionData }: { state: PredictionResult } = useLocation();

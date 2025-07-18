@@ -7,7 +7,6 @@ import ProtectedRoute from "./ProtectedRoute";
 import MultiplePredictionView from "../pages/MultiplePredictionView";
 import PredictionHistoryView from "../pages/PredictionHistoryView";
 import PredictionDetails from "../pages/PredictionDetails";
-import PredictionResults from "../pages/PredictionResults";
 import MultiplePredictionResults from "../pages/MultiplePredictionResults";
 import ProtectedApp from "../pages/ProtectedApp";
 
@@ -25,7 +24,6 @@ const AppRoutes = () => {
             path="/multiple-prediction"
             element={<MultiplePredictionView />}
           />
-          <Route path="/prediction-results" element={<PredictionResults />} />
           <Route
             path="/prediction-results/:id"
             element={<PredictionDetails />}
