@@ -120,11 +120,17 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="px-10 py-16 bg-ghost-white flex justify-center items-center">
+        <div className="px-8 py-16 bg-ghost-white flex justify-center items-center sm:px-10">
           <div className="w-[95%] bg-white p-8 rounded-lg shadow-md flex flex-col gap-6 sm:w-[90%] lg:w-[80%]">
             <h2 className="font-semibold">Actividad reciente</h2>
 
             <ul className="w-full flex flex-col gap-4">
+              {predictions?.length === 0 && (
+                <li className=" py-8 text-center text-sm text-gray-500">
+                  No has realizado ninguna predicción hasta el momento.
+                </li>
+              )}
+
               {predictions?.map((p) => (
                 <li
                   key={p.id}
