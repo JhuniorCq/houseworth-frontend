@@ -35,7 +35,6 @@ const Login = () => {
   });
 
   const onSubmit: SubmitHandler<LoginForm> = async (data) => {
-    console.log("Datos: ", data);
     const { email, password } = data;
 
     try {

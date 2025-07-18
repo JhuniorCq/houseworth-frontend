@@ -31,6 +31,8 @@ const ExcelForm = () => {
 
       if (!isApiSuccessResponse(result)) return;
 
+      const excelId = result.data?.[0].excelId;
+
       showToast({
         title: result.message,
         icon: "success",
@@ -38,9 +40,8 @@ const ExcelForm = () => {
 
       // Resetear el formulario
       reset();
-
       // Navegar a la vista de resultados
-      navigate("/multiple-prediction-results", {
+      navigate(`/multiple-prediction-results/${excelId}`, {
         state: {
           predictions: result.data,
           excelName: excelFile.name,

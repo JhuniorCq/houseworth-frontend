@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { SERVER_URL } from "../utils/constants";
 import type { ApiResponse } from "../types/apiResponse";
 import { getAuth } from "firebase/auth";
 import type { AppUser } from "../types/user";
@@ -8,11 +7,12 @@ import type {
   HouseData,
   PredictionResult,
 } from "../types/prediction";
+import { VITE_SERVER_URL } from "../config/config";
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: SERVER_URL,
+    baseUrl: VITE_SERVER_URL,
     prepareHeaders: async (headers) => {
       const auth = getAuth();
       const currentUser = auth.currentUser;
@@ -88,6 +88,23 @@ export const api = createApi({
       invalidatesTags: ["Predictions"],
     }),
 
+    getPredictionById: builder.query<ApiResponse<PredictionResult>, number>({
+      query: (id) => ({
+        url: `/prediction/${id}`,
+        method: "GET",
+      }),
+    }),
+
+    getPredictionsByExcelId: builder.query<
+      ApiResponse<PredictionResult[]>,
+      number
+    >({
+      query: (excelId) => ({
+        url: `/prediction/multiple/${excelId}`,
+        method: "GET",
+      }),
+    }),
+
     getAllPredictions: builder.query<
       ApiResponse<HistoryResult>,
       { limit?: number }
@@ -114,6 +131,8 @@ export const {
   useLoginUserMutation,
   useLazyGetUserByIdQuery,
   useMakePredictionMutation,
+  useLazyGetPredictionByIdQuery,
+  useLazyGetPredictionsByExcelIdQuery,
   useGetAllPredictionsQuery,
   usePerformMultiplePredictionMutation,
 } = api;

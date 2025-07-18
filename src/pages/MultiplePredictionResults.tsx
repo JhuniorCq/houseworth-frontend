@@ -1,4 +1,9 @@
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import type { PredictionResult } from "../types/prediction";
 import { IoIosArrowRoundBack, IoMdPricetags } from "react-icons/io";
 import Button from "../components/Button";
@@ -15,6 +20,7 @@ import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
 import PDF from "../components/PDF";
 
 const MultiplePredictionResults = () => {
+  const { excelId } = useParams();
   const navigate = useNavigate();
   const {
     state: { predictions, excelName },
@@ -52,7 +58,7 @@ const MultiplePredictionResults = () => {
 
       <div className="w-full flex flex-col gap-2">
         <h1 className="text-2xl font-semibold text-earth-very-strong">
-          Resultados de la predicción múltiple
+          Resultados de la predicción múltiple N° {excelId}
         </h1>
         <p className="text-sm">
           Análisis completo de las predicciones de precios de sus viviendas

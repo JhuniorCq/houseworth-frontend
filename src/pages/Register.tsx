@@ -46,8 +46,6 @@ const Register = () => {
       // Registro en Firebase
       const { uid } = await registerUser({ email, password });
 
-      console.log("Usuario registrado en Firebase");
-
       // Registrar al usuario en el backend de MySQL
       const registerResult = await signUp({
         uid,

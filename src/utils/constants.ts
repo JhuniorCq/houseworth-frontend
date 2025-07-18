@@ -1,8 +1,6 @@
 import { FaHotel, FaHouse } from "react-icons/fa6";
 import { GrHistory } from "react-icons/gr";
 
-export const SERVER_URL = "http://localhost:3000";
-
 export const LIST_OF_FEATURES = [
   {
     id: 1,

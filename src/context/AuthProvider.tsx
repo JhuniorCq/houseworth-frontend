@@ -50,8 +50,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setAppUser(null);
 
       dispatch(api.util.resetApiState());
-
-      console.log("Sesión cerrada con éxito.");
     } catch (error) {
       if (error instanceof FirebaseError) {
         throw new Error("Error al cerrar sesión. Intenta nuevamente.");
@@ -84,8 +82,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setAppUser(null);
           return;
         }
-
-        console.log("Resultado de getUser: ", result);
 
         setAppUser(result.data as AppUser); // guarda los datos del backend en el estado
       } catch (error) {

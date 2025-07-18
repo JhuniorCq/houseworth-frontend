@@ -21,7 +21,6 @@ const ExcelField = ({ setValue, errors }: ExcelFieldProps) => {
     const file = e.target.files?.[0];
     if (file) {
       const fileName = file.name;
-      console.log("Archivo seleccionado: ", file);
 
       const allowedTypes = [
         "application/vnd.ms-excel", // .xls

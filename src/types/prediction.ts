@@ -12,6 +12,7 @@ export type PredictionResult = {
   predictionDate: string;
   predictionTime: string;
   excelId: number | null;
+  excelName?: string | null;
 };
 
 export type HistoryResult = {

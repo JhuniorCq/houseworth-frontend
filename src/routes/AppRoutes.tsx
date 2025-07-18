@@ -31,7 +31,7 @@ const AppRoutes = () => {
             element={<PredictionDetails />}
           />
           <Route
-            path="/multiple-prediction-results"
+            path="/multiple-prediction-results/:excelId"
             element={<MultiplePredictionResults />}
           />
           <Route
