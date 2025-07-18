@@ -6,6 +6,8 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import type { PredictionResult } from "../types/prediction";
 import { searchNeighborhood, searchOverallQual } from "../utils/logic";
+import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
+import PDF from "../components/PDF";
 
 const PredictionDetails = () => {
   const { state: predictionData }: { state: PredictionResult } = useLocation();
@@ -18,6 +20,14 @@ const PredictionDetails = () => {
 
   const back = () => {
     navigate(-1);
+  };
+
+  const handleViewingPDF = async () => {
+    const blob = await pdf(
+      <PDF predictions={[{ ...predictionData }]} />
+    ).toBlob();
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, "_blank");
   };
 
   return (
@@ -60,16 +70,29 @@ const PredictionDetails = () => {
             </div>
 
             <div className="flex flex-col gap-3 md:flex-row">
-              <Button
-                type="button"
-                styles="bg-earth-strong text-white text-sm px-6 py-2.5 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-very-strong flex items-center justify-center gap-2 md:grow"
+              <PDFDownloadLink
+                document={<PDF predictions={[{ ...predictionData }]} />}
+                fileName={`prediccion-${predictionData.predictionDate}-${predictionData.predictionTime}.pdf`}
+                className="grow"
               >
-                <MdFileUpload className="text-[19px] shrink-0" />
-                <span>Descargar PDF del reporte</span>
-              </Button>
+                {({ loading }) => (
+                  <Button
+                    type="button"
+                    styles={`w-full text-white text-sm px-6 py-2.5 rounded transition-colors duration-300 ease-in-out flex items-center justify-center gap-2 ${
+                      loading
+                        ? "bg-earth-strong/50 cursor-not-allowed"
+                        : "bg-earth-strong hover:bg-earth-very-strong cursor-pointer"
+                    }`}
+                  >
+                    <MdFileUpload className="text-[19px] shrink-0" />
+                    <span>Descargar PDF del reporte</span>
+                  </Button>
+                )}
+              </PDFDownloadLink>
               <Button
                 type="button"
-                styles="bg-earth-strong text-white text-sm px-6 py-2.5 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-very-strong flex items-center justify-center gap-2  md:grow"
+                styles="bg-earth-strong text-white text-sm px-6 py-2.5 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-very-strong flex items-center justify-center gap-2 grow"
+                onClick={handleViewingPDF}
               >
                 <FaFilePdf className="text-[13.5px] shrink-0" />
                 <span>Visualizar PDF del reporte</span>

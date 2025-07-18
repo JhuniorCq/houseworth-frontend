@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import type { PredictionResult } from "../types/prediction";
 import Loader from "../components/Loader";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PDF from "../components/PDF";
 
 const PredictionHistoryView = () => {
   const {
@@ -156,7 +158,7 @@ const PredictionHistoryView = () => {
                   </thead>
                   <tbody>
                     {predictions.map((p, i) => (
-                      <tr key={i} className="text-center border-b">
+                      <tr key={p.id} className="text-center border-b">
                         <td className="px-4 py-2 text-gray-500 text-xs md:text-sm">
                           {p.predictionDate}
                         </td>
@@ -187,10 +189,21 @@ const PredictionHistoryView = () => {
                               }
                               title="Ver detalles"
                             />
-                            <FaDownload
-                              className="text-earth-strong transition-colors duration-300 ease-in-out hover:text-earth-very-strong cursor-pointer"
-                              title="Descargar PDF"
-                            />
+                            <PDFDownloadLink
+                              document={<PDF predictions={[{ ...p }]} />}
+                              fileName={`prediccion-${p.predictionDate}-${p.predictionTime}.pdf`}
+                            >
+                              {({ loading }) => (
+                                <FaDownload
+                                  className={`transition-colors duration-300 ease-in-out ${
+                                    loading
+                                      ? "text-earth-strong/50 cursor-not-allowed"
+                                      : "text-earth-strong hover:text-earth-very-strong cursor-pointer"
+                                  }`}
+                                  title="Descargar PDF"
+                                />
+                              )}
+                            </PDFDownloadLink>
                           </div>
                         </td>
                       </tr>

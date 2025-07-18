@@ -11,6 +11,8 @@ import {
   FaHome,
 } from "react-icons/fa";
 import { averagePrice, searchNeighborhood } from "../utils/logic";
+import { pdf, PDFDownloadLink } from "@react-pdf/renderer";
+import PDF from "../components/PDF";
 
 const MultiplePredictionResults = () => {
   const navigate = useNavigate();
@@ -33,6 +35,12 @@ const MultiplePredictionResults = () => {
     prediction: PredictionResult;
   }) => {
     navigate(`/prediction-results/${id}`, { state: prediction });
+  };
+
+  const handleViewingPDF = async () => {
+    const blob = await pdf(<PDF predictions={[...predictions]} />).toBlob();
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, "_blank");
   };
 
   return (
@@ -102,17 +110,30 @@ const MultiplePredictionResults = () => {
             <Button
               type="button"
               styles="bg-earth-strong text-white text-xs px-3 py-2 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-very-strong flex items-center gap-2"
+              onClick={handleViewingPDF}
             >
               <FaFilePdf />
               <span>Visualizar PDF</span>
             </Button>
-            <Button
-              type="button"
-              styles="bg-earth-strong text-white text-xs px-3 py-2 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-very-strong flex items-center gap-2"
+
+            <PDFDownloadLink
+              document={<PDF predictions={[...predictions]} />}
+              fileName={`prediccion-${predictions[0].predictionDate}-${predictions[0].predictionTime}.pdf`}
             >
-              <FaFileDownload />
-              <span>Descargar PDF</span>
-            </Button>
+              {({ loading }) => (
+                <Button
+                  type="button"
+                  styles={`text-white text-xs px-3 py-2 rounded transition-colors duration-300 ease-in-out flex items-center gap-2 ${
+                    loading
+                      ? "bg-earth-strong/50 cursor-not-allowed"
+                      : "bg-earth-strong hover:bg-earth-very-strong cursor-pointer"
+                  }`}
+                >
+                  <FaFileDownload />
+                  <span>Descargar PDF</span>
+                </Button>
+              )}
+            </PDFDownloadLink>
           </div>
         </div>
 
@@ -170,10 +191,21 @@ const MultiplePredictionResults = () => {
                         }
                         title="Ver detalles"
                       />
-                      <FaDownload
-                        className="text-earth-strong transition-colors duration-300 ease-in-out hover:text-earth-very-strong cursor-pointer"
-                        title="Descargar PDF"
-                      />
+                      <PDFDownloadLink
+                        document={<PDF predictions={[{ ...p }]} />}
+                        fileName={`prediccion-${p.predictionDate}-${p.predictionTime}.pdf`}
+                      >
+                        {({ loading }) => (
+                          <FaDownload
+                            className={`transition-colors duration-300 ease-in-out ${
+                              loading
+                                ? "text-earth-strong/50 cursor-not-allowed"
+                                : "text-earth-strong hover:text-earth-very-strong cursor-pointer"
+                            }`}
+                            title="Descargar PDF"
+                          />
+                        )}
+                      </PDFDownloadLink>
                     </div>
                   </td>
                 </tr>

@@ -5,9 +5,16 @@ type ButtonProps = {
   type: "button" | "submit" | "reset";
   styles?: string;
   disabled?: boolean;
+  onClick?: () => void;
 };
 
-const Button = ({ children, styles, type, disabled = false }: ButtonProps) => {
+const Button = ({
+  children,
+  styles,
+  type,
+  disabled = false,
+  onClick,
+}: ButtonProps) => {
   return (
     <button
       type={type}
@@ -17,6 +24,7 @@ const Button = ({ children, styles, type, disabled = false }: ButtonProps) => {
           : "bg-earth text-white text-sm px-6 py-2.5 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-strong"
       }
       disabled={disabled}
+      onClick={onClick}
     >
       {children}
     </button>
