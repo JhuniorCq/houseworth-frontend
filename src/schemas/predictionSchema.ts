@@ -1,4 +1,11 @@
 import { z } from "zod";
+import {
+  neighborhoodsOptions,
+  overallQualOptions,
+} from "../utils/selectOptions";
+
+const overallQualValues = overallQualOptions.map((o) => o.value);
+const neighborhoodValues = neighborhoodsOptions.map((o) => o.value);
 
 export const housePricePredictionSchema = z.object({
   grLivArea: z
@@ -6,8 +13,8 @@ export const housePricePredictionSchema = z.object({
       invalid_type_error: "Área habitable sobre el suelo debe ser un número",
       required_error: "Área habitable sobre el suelo es requerida",
     })
-    .min(0, {
-      message: "Área habitable sobre el suelo no puede ser negativa",
+    .min(300, {
+      message: "Área habitable sobre el suelo no puede ser menor a 300 ft²",
     }),
   garageCars: z
     .number({
@@ -30,23 +37,34 @@ export const housePricePredictionSchema = z.object({
     })
     .min(1800, {
       message: "Año de construcción debe ser mayor a 1800",
+    })
+    .max(new Date().getFullYear(), {
+      message: "Año de construcción no puede ser mayor al año actual",
     }),
   overallQual: z.object(
     {
-      value: z.number({
-        invalid_type_error: "Calidad general de la vivienda debe ser un número",
-        required_error: "Calidad general de la vivienda es requerida",
-      }),
+      value: z
+        .number({
+          invalid_type_error: "Calidad general inválida",
+          required_error: "Calidad general de la vivienda es requerida",
+        })
+        .refine((val) => overallQualValues.includes(val), {
+          message: "Selecciona una calidad general válida",
+        }),
       label: z.string(),
     },
     { required_error: "Calidad general de la vivienda es requerida" }
   ),
   neighborhood: z.object(
     {
-      value: z.string({
-        invalid_type_error: "Barrio debe ser una cadena de texto",
-        required_error: "Barrio es requerido",
-      }),
+      value: z
+        .string({
+          invalid_type_error: "Barrio debe ser una cadena de texto",
+          required_error: "Barrio es requerido",
+        })
+        .refine((val) => neighborhoodValues.includes(val), {
+          message: "Selecciona un barrio válido",
+        }),
       label: z.string(),
     },
     {

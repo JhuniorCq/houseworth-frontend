@@ -46,13 +46,22 @@ const PredictionHistoryView = () => {
     };
 
     const goToPredictionDetails = ({
-      id,
       prediction,
     }: {
-      id: number;
       prediction: PredictionResult;
     }) => {
-      navigate(`/prediction-results/${id}`, { state: prediction });
+      navigate(`/prediction-results/${prediction.id}`, { state: prediction });
+
+      // ****
+
+      // if (prediction.excelId) {
+      //   // Si existe un excelId quiere decir que esta predicción forma parte de una predicción múltiple -> Por ende lo que haré será redirgir al usuario a la vista de MultiplePredictionResults, y ahí haré un GET para obtener todas las predicciones con ese excelId -> y esas predicciones las mostraré en la vista de MultiplePredictionResults
+      //   // Dato: En esta solicitud GET tambien pedir el excelName
+      //   navigate(`/multiple-prediction/${prediction.excelId}`);
+      // } else {
+      //   // Si no existe un excelId quiere decir que es una predicción simple -> Por ende lo que haré será redirigir al usuario a la vista de PredictionDetails, y ahí mostraré los detalles de esa predicción
+      //   navigate(`/prediction-results/${prediction.id}`, { state: prediction });
+      // }
     };
 
     return (
@@ -157,7 +166,7 @@ const PredictionHistoryView = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {predictions.map((p, i) => (
+                    {predictions.map((p) => (
                       <tr key={p.id} className="text-center border-b">
                         <td className="px-4 py-2 text-gray-500 text-xs md:text-sm">
                           {p.predictionDate}
@@ -183,7 +192,6 @@ const PredictionHistoryView = () => {
                               className="text-earth-strong transition-colors duration-300 ease-in-out hover:text-earth-very-strong cursor-pointer"
                               onClick={() =>
                                 goToPredictionDetails({
-                                  id: i + 1,
                                   prediction: p,
                                 })
                               }

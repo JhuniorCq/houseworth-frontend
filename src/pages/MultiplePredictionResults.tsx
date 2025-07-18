@@ -28,13 +28,11 @@ const MultiplePredictionResults = () => {
   };
 
   const goToPredictionDetails = ({
-    id,
     prediction,
   }: {
-    id: number;
     prediction: PredictionResult;
   }) => {
-    navigate(`/prediction-results/${id}`, { state: prediction });
+    navigate(`/prediction-results/${prediction.id}`, { state: prediction });
   };
 
   const handleViewingPDF = async () => {
@@ -162,8 +160,8 @@ const MultiplePredictionResults = () => {
               </tr>
             </thead>
             <tbody>
-              {predictions.map((p, i) => (
-                <tr key={i} className="text-center border-b">
+              {predictions.map((p) => (
+                <tr key={p.id} className="text-center border-b">
                   <td className="px-4 py-2 text-gray-500 text-xs md:text-sm">
                     {p.predictionDate}
                   </td>
@@ -185,7 +183,6 @@ const MultiplePredictionResults = () => {
                         className="text-earth-strong transition-colors duration-300 ease-in-out hover:text-earth-very-strong cursor-pointer"
                         onClick={() =>
                           goToPredictionDetails({
-                            id: i + 1,
                             prediction: p,
                           })
                         }
