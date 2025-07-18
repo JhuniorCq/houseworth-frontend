@@ -1,6 +1,11 @@
 import { FaHotel, FaHouse } from "react-icons/fa6";
 import { GrHistory } from "react-icons/gr";
 
+export const ALLOWED_MIME_TYPES = [
+  "application/vnd.ms-excel", // .xls
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+];
+
 export const LIST_OF_FEATURES = [
   {
     id: 1,

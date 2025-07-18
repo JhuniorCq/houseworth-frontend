@@ -3,6 +3,7 @@ import type { FieldErrors, UseFormSetValue } from "react-hook-form";
 import { IoCloudUpload } from "react-icons/io5";
 import { MdFileUpload } from "react-icons/md";
 import type { MultipleHomePricePrediction } from "../schemas/predictionSchema";
+import { ALLOWED_MIME_TYPES } from "../utils/constants";
 
 interface ExcelFieldProps {
   setValue: UseFormSetValue<MultipleHomePricePrediction>;
@@ -22,12 +23,7 @@ const ExcelField = ({ setValue, errors }: ExcelFieldProps) => {
     if (file) {
       const fileName = file.name;
 
-      const allowedTypes = [
-        "application/vnd.ms-excel", // .xls
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
-      ];
-
-      if (!allowedTypes.includes(file.type)) {
+      if (!ALLOWED_MIME_TYPES.includes(file.type)) {
         setSelectedFileName(null);
         setValue("excelFile", file, { shouldValidate: true });
         return;
