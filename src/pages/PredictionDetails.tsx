@@ -2,13 +2,7 @@ import { FaCheckCircle, FaFileExcel, FaFilePdf, FaHome } from "react-icons/fa";
 import { MdFileUpload } from "react-icons/md";
 import { IoIosArrowRoundBack, IoMdAdd } from "react-icons/io";
 import { GrHistory } from "react-icons/gr";
-import {
-  Link,
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import type { PredictionResult } from "../types/prediction";
 import { searchNeighborhood, searchOverallQual } from "../utils/logic";
@@ -18,7 +12,6 @@ import PDF from "../components/PDF";
 // TODO: No mostrar el N° {ID} -> Ya que se muestra el ID de la predicción en base a TODAS las predicciones existentes en la BD
 
 const PredictionDetails = () => {
-  const { id } = useParams();
   const { state: predictionData }: { state: PredictionResult } = useLocation();
   const navigate = useNavigate();
 
@@ -51,7 +44,7 @@ const PredictionDetails = () => {
 
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-semibold text-earth-very-strong">
-          Resultado de la Predicción N° {id}
+          Resultado de la Predicción
         </h1>
         <p className="text-sm">
           Análisis completo de la predicción de precio para su vivienda.

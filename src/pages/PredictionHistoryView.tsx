@@ -1,5 +1,3 @@
-import { IoReloadOutline } from "react-icons/io5";
-import Button from "../components/Button";
 import {
   useGetAllPredictionsQuery,
   useLazyGetPredictionByIdQuery,
@@ -184,16 +182,7 @@ const PredictionHistoryView = () => {
                   <h2 className="text-lg font-semibold text-earth-very-strong text-center">
                     Historial de predicciones
                   </h2>
-
-                  <div>
-                    <Button
-                      type="button"
-                      styles="bg-earth-strong text-white text-xs px-3 py-2 rounded cursor-pointer transition-colors duration-300 ease-in-out hover:bg-earth-very-strong flex items-center gap-2"
-                    >
-                      <IoReloadOutline />
-                      <span>Actualizar</span>
-                    </Button>
-                  </div>
+                  {/* Se puede colocar un fltro */}
                 </div>
 
                 <div className="w-full max-h-96 px-6 pb-6 overflow-x-auto">
